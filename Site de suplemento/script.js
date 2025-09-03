@@ -1,18 +1,21 @@
-const buyBtn = document.getElementById("buyBtn");
+<script>
+  const btn = document.getElementById("accessibilityToggle");
 
-buyBtn.addEventListener("click", () => {
-  alert("Your cart is ready! Let’s start shopping.");
-});
+  // Lista de modos de daltonismo disponíveis
+  const modes = ["protanopia", "deuteranopia", "tritanopia", "achromatopsia"];
+  let currentMode = -1; // começa sem nenhum filtro
 
-// Accessibility: activate button with Enter or Space
-buyBtn.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    buyBtn.click();
-  }
-});
-const accessibilityBtn = document.getElementById("accessibilityBtn");
+  btn.addEventListener("click", () => {
+    // Remove a classe anterior
+    if (currentMode >= 0) {
+      document.body.classList.remove(modes[currentMode]);
+    }
 
-accessibilityBtn.addEventListener("click", () => {
-  alert("Accessibility options will be available soon (e.g. font size, contrast, dark mode).");
-});
+    // Avança para o próximo modo
+    currentMode = (currentMode + 1) % (modes.length + 1);
+
+    // Se não for o último "modo normal", aplica filtro
+    if (currentMode < modes.length) {
+      document.body.classList.add(modes[currentMode]);
+      btn.querySelector("span").textContent = `
+
